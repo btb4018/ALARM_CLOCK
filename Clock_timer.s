@@ -1,18 +1,34 @@
 #include <xc.inc>
 	
-extrn	Write_Decimal_LCD, LCD_Clear, LCD_Write_Character, LCD_Write_Hex, operation_check
-extrn	LCD_Set_Position, LCD_Write_Time, LCD_Write_Temp, Keypad, LCD_Send_Byte_I, LCD_Send_Byte_D, keypad_val, keypad_ascii
-extrn	LCD_Write_Low_Nibble, LCD_Write_High_Nibble
-global	Clock, Clock_Setup, operation
+extrn	LCD_Write_Time, LCD_Write_Temp
+extrn	LCD_Set_Position, LCD_Write_Character
+extrn	Write_Decimal_LCD  
+extrn	keypad_val, keypad_ascii
+
+global	Clock, Clock_Setup
     
 psect	udata_acs
 clock_sec:	ds  1	;reserving byte to store second time in hex
 clock_min:	ds  1	;reserving byte to store minute time in hex
 clock_hrs:	ds  1	;reserving byte to store hour time in hex
+
 check_60:	ds  1	;reserving byte to store decimal 60 in hex
 check_24:	ds  1	;reserving byte to store decimal 24 in hex
 
-sect	Clock_timer_code, class=CODE
+timer_start_value_1:	ds 1
+timer_start_value_2:	ds 1
+
+hex_A:	ds 1
+hex_B:	ds 1
+hex_C:	ds 1
+hex_D:	ds 1
+hex_E:	ds 1
+hex_F:	ds 1
+hex_null:   	ds  1
+
+skip_byte:	ds 1
+
+psect	Clock_timer_code, class=CODE
 
 Clock_Setup: 
 	movlw	0x00		;setting start time to 00:00:00
